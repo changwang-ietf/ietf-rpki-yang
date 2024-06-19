@@ -1,0 +1,50 @@
+module: ietf-rpki-table
+
+  augment /rt:routing:
+    +--ro roa-tables
+    |  +--ro roa-table* [name]
+    |     +--ro name    string
+    |     +--ro ipv4
+    |     |  +--ro roas
+    |     |  |  +--ro roa* [prefix max-len asn source]
+    |     |  |     +--ro prefix     inet:ipv4-prefix
+    |     |  |     +--ro max-len    ipv4-pfx-len
+    |     |  |     +--ro asn        inet:as-number
+    |     |  |     +--ro source     union
+    |     |  +--ro total-records?     yang:gauge32
+    |     |  +--ro records-added?     yang:counter64
+    |     |  +--ro records-deleted?   yang:counter64
+    |     +--ro ipv6
+    |        +--ro roas
+    |        |  +--ro roa* [prefix max-len asn source]
+    |        |     +--ro prefix     inet:ipv6-prefix
+    |        |     +--ro max-len    ipv6-pfx-len
+    |        |     +--ro asn        inet:as-number
+    |        |     +--ro source     union
+    |        +--ro total-records?     yang:gauge32
+    |        +--ro records-added?     yang:counter64
+    |        +--ro records-deleted?   yang:counter64
+    +--ro router-key-tables
+    |  +--ro router-key-table* [name]
+    |     +--ro name           string
+    |     +--ro router-keys
+    |        +--ro router-key* [ski asn key server-address]
+    |           +--ro ski               subject-key-id
+    |           +--ro asn               inet:as-number
+    |           +--ro key               string
+    |           +--ro server-address    inet:ip-address
+    +--ro aspa-tables
+       +--ro aspa-table* [name]
+          +--ro name    string
+          +--ro ipv4
+          |  +--ro aspas* [customer-asn]
+          |     +--ro customer-asn      inet:as-number
+          |     +--ro server-address?   inet:ip-address
+          |     +--ro provider-asns* [provider-asn]
+          |        +--ro provider-asn    inet:as-number
+          +--ro ipv6
+             +--ro aspas* [customer-asn]
+                +--ro customer-asn      inet:as-number
+                +--ro server-address?   inet:ip-address
+                +--ro provider-asns* [provider-asn]
+                   +--ro provider-asn    inet:as-number

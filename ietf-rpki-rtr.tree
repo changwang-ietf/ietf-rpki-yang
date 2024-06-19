@@ -1,0 +1,113 @@
+module: ietf-rpki-rtr
+
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol:
+    +--rw rpki-rtr
+       +--rw sessions
+          +--rw session* [server-address]
+             +--rw server-address           inet:ip-address
+             +--rw server-port?             inet:port-number
+             +--rw local-address?           union
+             +--rw local-port?              inet:port-number
+             +--rw enabled?                 boolean
+             +--rw preference?              uint32
+             +--rw description?             string
+             +--ro session-state?           enumeration
+             +--rw enable-authentication?   boolean
+             +--rw authentication
+             |  +--rw (option)?
+             |     +--:(md5)
+             |     |  +--rw md5-password?   ianach:crypt-hash
+             |     +--:(ssh)
+             |     |  +--rw client-identity
+             |     |  |  +--rw username?  string
+             |     |  |  +--rw public-key!
+             |     |  |                   {userauth-publickey}?
+             |     |  |  +--rw password!
+             |     |  |                   {userauth-password}?
+             |     |  |  +--rw hostbased!
+             |     |  |                   {userauth-hostbased}?
+             |     |  |  +--rw none?      empty {userauth-none}?
+             |     |  |  +--rw certificate!
+             |     |  |                   {sshcmn:ssh-x509-certs}?
+             |     |  +--rw server-authentication
+             |     |  |  +--rw ssh-host-keys!
+             |     |  |  +--rw ca-certs!  {sshcmn:ssh-x509-certs}?
+             |     |  |  +--rw ee-certs!  {sshcmn:ssh-x509-certs}?
+             |     |  +--rw transport-params
+             |     |  |       {ssh-client-transport-params-config}?
+             |     |  +--rw keepalives!   {ssh-client-keepalives}?
+             |     |     +--rw max-wait?       uint16
+             |     |     +--rw max-attempts?   uint8
+             |     +--:(tcp-ao-keychain)
+             |        +--rw keychain-name?  key-chain:key-chain-ref
+             +--rw roa-limit
+             |  +--rw max-number?              uint64
+             |  +--rw threshold-percentage?    uint8
+             |  +--rw over-threshold-action?   enumeration
+             |  +--rw reconnect-interval?      uint32
+             +--rw aspa-limit
+             |  +--rw max-number?              uint64
+             |  +--rw threshold-percentage?    uint8
+             |  +--rw over-threshold-action?   enumeration
+             |  +--rw reconnect-interval?      uint32
+             +--ro statistics
+             |  +--ro total-roa-records? yang:zero-based-counter64
+             |  +--ro ipv4-roa-records?  yang:zero-based-counter64
+             |  +--ro ipv6-roa-records?  yang:zero-based-counter64
+             |  +--ro router-key-records?
+             |  |                        yang:zero-based-counter64
+             |  +--ro ipv4-aspa-records? yang:zero-based-counter64
+             |  +--ro ipv6-aspa-records? yang:zero-based-counter64
+             +--ro connection-data
+             |  +--ro flaps?                        uint32
+             |  +--ro last-session-up-down?         yang:timestamp
+             |  +--ro last-update-sync-timestamp?   yang:timestamp
+             |  +--ro last-full-sync-timestamp?     yang:timestamp
+             |  +--ro last-serial-query-timestamp?  yang:timestamp
+             |  +--ro last-reset-query-timestamp?   yang:timestamp
+             |  +--ro last-eod-received?            yang:timestamp
+             |  +--ro last-config-change-timestamp? yang:timestamp
+             |  +--ro last-error-timestamp?         yang:timestamp
+             |  +--ro last-connection-error-timestamp?
+             |  |                                   yang:timestamp
+             |  +--ro last-connection-timestamp?    yang:timestamp
+             |  +--ro error-reason?                 string
+             +--ro protocol-data
+             |  +--ro protocol-version?   uint32
+             |  +--ro refresh-time?       yang:timestamp
+             |  +--ro response-time?      yang:timestamp
+             |  +--ro purge-time?         yang:timestamp
+             |  +--ro hold-time?          yang:timestamp
+             |  +--ro record-lifetime?    yang:timestamp
+             |  +--ro retry-interval?     uint32
+             |  +--ro expire-interval?    uint32
+             |  +--ro session-id?         uint16
+             |  +--ro serial-full?        uint32
+             |  +--ro serial-incremental? uint32
+             |  +--ro in-total-messages?  yang:zero-based-counter64
+             |  +--ro out-total-messages? yang:zero-based-counter64
+             +--ro pdu-counters
+             |  +--ro serial-notify?    yang:zero-based-counter64
+             |  +--ro cache-response?   yang:zero-based-counter64
+             |  +--ro ipv4-prefix?      yang:zero-based-counter64
+             |  +--ro ipv6-prefix?      yang:zero-based-counter64
+             |  +--ro end-of-data?      yang:zero-based-counter64
+             |  +--ro cache-reset?      yang:zero-based-counter64
+             |  +--ro reset-query?      yang:zero-based-counter64
+             |  +--ro serial-query?     yang:zero-based-counter64
+             +--ro error-pdu-counters
+                +--ro corrupt-data?      yang:zero-based-counter64
+                +--ro internal-error?    yang:zero-based-counter64
+                +--ro unsupported-protocol-version?
+                |                        yang:zero-based-counter64
+                +--ro unsupported-pdu-type?
+                |                        yang:zero-based-counter64
+                +--ro unexpected-protocol-version?
+                |                        yang:zero-based-counter64
+                +--ro no-data-available? yang:zero-based-counter64
+                +--ro invalid-request?   yang:zero-based-counter64
+                +--ro withdrawal-unknown-record?
+                |                        yang:zero-based-counter64
+                +--ro duplicate-announcement-received?
+                                         yang:zero-based-counter64
