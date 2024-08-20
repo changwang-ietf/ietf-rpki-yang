@@ -4,6 +4,12 @@
              + "ietf-bgp-origin-as-validation";
      prefix "oav";
 
+     import ietf-yang-types {
+       prefix "yang";
+       reference
+         "RFC 6991: Common YANG Data Types.";
+     }
+
      import ietf-inet-types {
        prefix "inet";
        reference
@@ -25,12 +31,6 @@
 
      import iana-bgp-types {
        prefix "bt";
-       reference
-         "RFC XXXX: YANG Model for Border Gateway Protocol (BGP-4)";
-     }
-
-     import iana-bgp-rib-types {
-       prefix "brt";
        reference
          "RFC XXXX: YANG Model for Border Gateway Protocol (BGP-4)";
      }
@@ -76,10 +76,19 @@
          "RFC XXXX, YANG Data Model for RPKI to Router Protocol";
      }
 
-     identity ineligible-orgin-as {
-       base brt:ineligible-route-reason;
+     typedef route-validity-invalid-reason {
+       type enumeration {
+         enum ineligible-orgin-as {
+           description
+             "Route was ineligible due to origin as validation";
+         }
+         enum ineligible-max-len {
+           description
+             "Route was ineligible due to max-length of the prefix as validation";
+         }
+       }
        description
-         "Route was ineligible due to origin as validation";
+         "Origin AS validation state invalid reason of BGP routes.";
      }
 
      typedef origin-as-validity-state {
@@ -207,6 +216,35 @@
        }
      }
 
+     grouping origin-as-validity-statistics {
+       description
+         "Origin-AS validation statistics.";
+       container statistics {
+         leaf validation-state-unverified {
+           type yang:gauge32;
+           description
+             "The number of routes with validation state as unverified.";
+         }
+         leaf validation-state-unknown {
+           type yang:gauge32;
+           description
+             "The number of routes with validation state as unknown.";
+         }
+         leaf validation-state-invalid {
+           type yang:gauge32;
+           description
+             "The number of routes with validation state as invalid.";
+         }
+         leaf validation-state-valid {
+           type yang:gauge32;
+           description
+             "The number of routes with validation state as valid.";
+         }
+         description
+           "Statistical data for Origin-AS validation states.";
+       }
+     }
+
      augment "/rt:routing/rt:control-plane-protocols"
            + "/rt:control-plane-protocol/bgp:bgp/bgp:global"
            + "/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast" {
@@ -228,6 +266,106 @@
      augment "/rt:routing/rt:control-plane-protocols"
            + "/rt:control-plane-protocol/bgp:bgp/bgp:rib"
            + "/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast"
+           + "/bgp:rib-in-pre" {
+       description
+         "Augmentation of BGP IPv4 Unicast route statistics.";
+
+       uses origin-as-validity-statistics;
+     }
+
+     augment "/rt:routing/rt:control-plane-protocols"
+           + "/rt:control-plane-protocol/bgp:bgp/bgp:rib"
+           + "/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast"
+           + "/bgp:rib-in-pre" {
+       description
+         "Augmentation of BGP IPv6 Unicast route statistics.";
+
+       uses origin-as-validity-statistics;
+     }
+
+     augment "/rt:routing/rt:control-plane-protocols"
+           + "/rt:control-plane-protocol/bgp:bgp/bgp:rib"
+           + "/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast"
+           + "/bgp:rib-in-post" {
+       description
+         "Augmentation of BGP IPv4 Unicast route statistics.";
+
+       uses origin-as-validity-statistics;
+     }
+
+     augment "/rt:routing/rt:control-plane-protocols"
+           + "/rt:control-plane-protocol/bgp:bgp/bgp:rib"
+           + "/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast"
+           + "/bgp:rib-in-post" {
+       description
+         "Augmentation of BGP IPv6 Unicast route statistics.";
+
+       uses origin-as-validity-statistics;
+     }
+
+     augment "/rt:routing/rt:control-plane-protocols"
+           + "/rt:control-plane-protocol/bgp:bgp/bgp:rib"
+           + "/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast"
+           + "/bgp:loc-rib" {
+       description
+         "Augmentation of BGP IPv4 Unicast route statistics.";
+
+       uses origin-as-validity-statistics;
+     }
+
+     augment "/rt:routing/rt:control-plane-protocols"
+           + "/rt:control-plane-protocol/bgp:bgp/bgp:rib"
+           + "/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast"
+           + "/bgp:loc-rib" {
+       description
+         "Augmentation of BGP IPv6 Unicast route statistics.";
+
+       uses origin-as-validity-statistics;
+     }
+
+     augment "/rt:routing/rt:control-plane-protocols"
+           + "/rt:control-plane-protocol/bgp:bgp/bgp:rib"
+           + "/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast"
+           + "/bgp:rib-out-pre" {
+       description
+         "Augmentation of BGP IPv4 Unicast route statistics.";
+
+       uses origin-as-validity-statistics;
+     }
+
+     augment "/rt:routing/rt:control-plane-protocols"
+           + "/rt:control-plane-protocol/bgp:bgp/bgp:rib"
+           + "/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast"
+           + "/bgp:rib-out-pre" {
+       description
+         "Augmentation of BGP IPv6 Unicast route statistics.";
+
+       uses origin-as-validity-statistics;
+     }
+
+     augment "/rt:routing/rt:control-plane-protocols"
+           + "/rt:control-plane-protocol/bgp:bgp/bgp:rib"
+           + "/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast"
+           + "/bgp:rib-out-post" {
+       description
+         "Augmentation of BGP IPv4 Unicast route statistics.";
+
+       uses origin-as-validity-statistics;
+     }
+
+     augment "/rt:routing/rt:control-plane-protocols"
+           + "/rt:control-plane-protocol/bgp:bgp/bgp:rib"
+           + "/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast"
+           + "/bgp:rib-out-post" {
+       description
+         "Augmentation of BGP IPv6 Unicast route statistics.";
+
+       uses origin-as-validity-statistics;
+     }
+
+     augment "/rt:routing/rt:control-plane-protocols"
+           + "/rt:control-plane-protocol/bgp:bgp/bgp:rib"
+           + "/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast"
            + "/bgp:loc-rib/bgp:routes/bgp:route" {
        description
          "Origin AS validity augmentation of BGP IPv4 Unicast
@@ -236,6 +374,11 @@
          type origin-as-validity-state;
          description
            "Origin AS validity of BGP IPv4 Unicast prefix";
+       }
+       leaf validity-invalid-reason {
+         type route-validity-invalid-reason;
+         description
+           "Reason for marking a BGP IPv4 Unicast prefix as invalid";
        }
      }
 
@@ -250,6 +393,11 @@
          type origin-as-validity-state;
          description
            "Origin AS validity of BGP IPv6 Unicast prefix";
+       }
+       leaf validity-invalid-reason {
+         type route-validity-invalid-reason;
+         description
+           "Reason for marking a BGP IPv6 Unicast prefix as invalid";
        }
      }
 
@@ -276,6 +424,7 @@
           Community advertisement for IPv4 Unicast neighbor";
        uses origin-as-validity-advertisement;
        uses export-origin-as-validation-config;
+       uses origin-as-validity-statistics;
      }
 
      augment "/rt:routing/rt:control-plane-protocols"
@@ -287,6 +436,7 @@
           Community advertisement for IPv6 Unicast neighbor";
        uses origin-as-validity-advertisement;
        uses export-origin-as-validation-config;
+       uses origin-as-validity-statistics;
      }
 
      augment "/rt:routing/rt:control-plane-protocols"
