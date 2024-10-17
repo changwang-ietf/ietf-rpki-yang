@@ -1,111 +1,190 @@
 module: ietf-bgp-origin-as-validation
 
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:global/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast:
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:global
+            /bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast:
     +--rw origin-as-validation
        +--rw enabled?             boolean
+       +--rw eligible-prefix-policy?  leafref
        +--rw redistribution-as?   inet:as-number
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:global/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast:
+
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:global
+            /bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast:
     +--rw origin-as-validation
        +--rw enabled?             boolean
+       +--rw eligible-prefix-policy?  leafref
        +--rw redistribution-as?   inet:as-number
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast/bgp:rib-in-pre:
+   
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:rib
+            /bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast
+            /bgp:rib-in-pre:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
        +--ro validation-state-invalid?      yang:gauge32
        +--ro validation-state-valid?        yang:gauge32
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast/bgp:rib-in-pre:
+   
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:rib
+            /bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast
+            /bgp:rib-in-pre:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
        +--ro validation-state-invalid?      yang:gauge32
        +--ro validation-state-valid?        yang:gauge32
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast/bgp:rib-in-post:
+
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis
+            /bgp:afi-safi/bgp:ipv4-unicast
+            /bgp:rib-in-post:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
        +--ro validation-state-invalid?      yang:gauge32
        +--ro validation-state-valid?        yang:gauge32
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast/bgp:rib-in-post:
+
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:rib
+            /bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast
+            /bgp:rib-in-post:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
        +--ro validation-state-invalid?      yang:gauge32
        +--ro validation-state-valid?        yang:gauge32
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast/bgp:loc-rib:
+
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:rib
+            /bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast/bgp:loc-rib:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
        +--ro validation-state-invalid?      yang:gauge32
        +--ro validation-state-valid?        yang:gauge32
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast/bgp:loc-rib:
+   
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:rib
+            /bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast/bgp:loc-rib:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
        +--ro validation-state-invalid?      yang:gauge32
        +--ro validation-state-valid?        yang:gauge32
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast/bgp:rib-out-pre:
+   
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:rib
+            /bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast
+            /bgp:rib-out-pre:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
        +--ro validation-state-invalid?      yang:gauge32
        +--ro validation-state-valid?        yang:gauge32
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast/bgp:rib-out-pre:
+   
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:rib
+              /bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast
+              /bgp:rib-out-pre:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
        +--ro validation-state-invalid?      yang:gauge32
        +--ro validation-state-valid?        yang:gauge32
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast/bgp:rib-out-post:
+   
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:rib
+            /bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast
+            /bgp:rib-out-post:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
        +--ro validation-state-invalid?      yang:gauge32
        +--ro validation-state-valid?        yang:gauge32
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast/bgp:rib-out-post:
+   
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:rib
+            /bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast
+            /bgp:rib-out-post:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
        +--ro validation-state-invalid?      yang:gauge32
        +--ro validation-state-valid?        yang:gauge32
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast/bgp:loc-rib/bgp:routes/bgp:route:
+  
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:rib
+            /bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast
+            /bgp:loc-rib/bgp:routes/bgp:route:
     +--ro origin-as-validity?        origin-as-validity-state
     +--ro validity-invalid-reason?   route-validity-invalid-reason
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast/bgp:loc-rib/bgp:routes/bgp:route:
+
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:rib
+            /bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast
+            /bgp:loc-rib/bgp:routes/bgp:route:
     +--ro origin-as-validity?        origin-as-validity-state
     +--ro validity-invalid-reason?   route-validity-invalid-reason
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:global/bgp:afi-safis/bgp:afi-safi/bgp:route-selection-options:
+
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:global
+            /bgp:afi-safis/bgp:afi-safi/bgp:route-selection-options:
     +--rw origin-as
        +--rw enabled?           boolean
        +--rw allow-invalid?     boolean
        +--rw allow-not-found?   boolean
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:neighbors/bgp:neighbor/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast:
+       +--rw eligible-prefix-policy?  leafref
+   
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:neighbors
+            /bgp:neighbor/bgp:afi-safis/bgp:afi-safi
+            /bgp:ipv4-unicast:
     +--rw send-origin-as-validity?       boolean
     +--rw export-origin-as-validation
     |  +--rw enabled?           boolean
     |  +--rw allow-not-found?   boolean
+    |  +--rw eligible-prefix-policy?  leafref
     +--rw statistics
        +--rw validation-state-unverified?   yang:gauge32
        +--rw validation-state-unknown?      yang:gauge32
        +--rw validation-state-invalid?      yang:gauge32
        +--rw validation-state-valid?        yang:gauge32
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:neighbors/bgp:neighbor/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast:
+   
+   augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:neighbors
+            /bgp:neighbor/bgp:afi-safis/bgp:afi-safi
+            /bgp:ipv6-unicast:
     +--rw send-origin-as-validity?       boolean
     +--rw export-origin-as-validation
     |  +--rw enabled?           boolean
     |  +--rw allow-not-found?   boolean
+    |  +--rw eligible-prefix-policy?  leafref
     +--rw statistics
        +--rw validation-state-unverified?   yang:gauge32
        +--rw validation-state-unknown?      yang:gauge32
        +--rw validation-state-invalid?      yang:gauge32
        +--rw validation-state-valid?        yang:gauge32
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:peer-groups/bgp:peer-group/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast:
+
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:peer-groups
+            /bgp:peer-group/bgp:afi-safis/bgp:afi-safi
+            /bgp:ipv4-unicast:
     +--rw send-origin-as-validity?       boolean
     +--rw export-origin-as-validation
        +--rw enabled?           boolean
        +--rw allow-not-found?   boolean
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:peer-groups/bgp:peer-group/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast:
+       +--rw eligible-prefix-policy?  leafref
+
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol/bgp:bgp/bgp:peer-groups
+            /bgp:peer-group/bgp:afi-safis/bgp:afi-safi
+            /bgp:ipv6-unicast:
     +--rw send-origin-as-validity?       boolean
     +--rw export-origin-as-validation
        +--rw enabled?           boolean
        +--rw allow-not-found?   boolean
+       +--rw eligible-prefix-policy?  leafref
+
+
