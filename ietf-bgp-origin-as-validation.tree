@@ -15,41 +15,29 @@ module: ietf-bgp-origin-as-validation
        +--rw enabled?             boolean
        +--rw eligible-prefix-policy?  leafref
        +--rw redistribution-as?   inet:as-number
-   
-  augment /rt:routing/rt:control-plane-protocols
-            /rt:control-plane-protocol/bgp:bgp/bgp:rib
-            /bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast
-            /bgp:rib-in-pre:
-    +--ro statistics
-       +--ro validation-state-unverified?   yang:gauge32
-       +--ro validation-state-unknown?      yang:gauge32
-       +--ro validation-state-invalid?      yang:gauge32
-       +--ro validation-state-valid?        yang:gauge32
-   
-  augment /rt:routing/rt:control-plane-protocols
-            /rt:control-plane-protocol/bgp:bgp/bgp:rib
-            /bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast
-            /bgp:rib-in-pre:
+
+  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast/bgp:neighbors/bgp:neighbor/bgp:adj-rib-in-pre:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
        +--ro validation-state-invalid?      yang:gauge32
        +--ro validation-state-valid?        yang:gauge32
 
-  augment /rt:routing/rt:control-plane-protocols
-            /rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis
-            /bgp:afi-safi/bgp:ipv4-unicast
-            /bgp:rib-in-post:
+  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast/bgp:neighbors/bgp:neighbor/bgp:adj-rib-in-pre:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
        +--ro validation-state-invalid?      yang:gauge32
        +--ro validation-state-valid?        yang:gauge32
 
-  augment /rt:routing/rt:control-plane-protocols
-            /rt:control-plane-protocol/bgp:bgp/bgp:rib
-            /bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast
-            /bgp:rib-in-post:
+  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast/bgp:neighbors/bgp:neighbor/bgp:adj-rib-in-post:
+    +--ro statistics
+       +--ro validation-state-unverified?   yang:gauge32
+       +--ro validation-state-unknown?      yang:gauge32
+       +--ro validation-state-invalid?      yang:gauge32
+       +--ro validation-state-valid?        yang:gauge32
+
+  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast/bgp:neighbors/bgp:neighbor/bgp:adj-rib-in-post:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
@@ -73,41 +61,29 @@ module: ietf-bgp-origin-as-validation
        +--ro validation-state-unknown?      yang:gauge32
        +--ro validation-state-invalid?      yang:gauge32
        +--ro validation-state-valid?        yang:gauge32
-   
-  augment /rt:routing/rt:control-plane-protocols
-            /rt:control-plane-protocol/bgp:bgp/bgp:rib
-            /bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast
-            /bgp:rib-out-pre:
+
+  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast/bgp:neighbors/bgp:neighbor/bgp:adj-rib-out-pre:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
        +--ro validation-state-invalid?      yang:gauge32
        +--ro validation-state-valid?        yang:gauge32
-   
-  augment /rt:routing/rt:control-plane-protocols
-            /rt:control-plane-protocol/bgp:bgp/bgp:rib
-              /bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast
-              /bgp:rib-out-pre:
+
+  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast/bgp:neighbors/bgp:neighbor/bgp:adj-rib-out-pre:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
        +--ro validation-state-invalid?      yang:gauge32
        +--ro validation-state-valid?        yang:gauge32
-   
-  augment /rt:routing/rt:control-plane-protocols
-            /rt:control-plane-protocol/bgp:bgp/bgp:rib
-            /bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast
-            /bgp:rib-out-post:
+
+  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv4-unicast/bgp:neighbors/bgp:neighbor/bgp:adj-rib-out-post:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
        +--ro validation-state-invalid?      yang:gauge32
        +--ro validation-state-valid?        yang:gauge32
-   
-  augment /rt:routing/rt:control-plane-protocols
-            /rt:control-plane-protocol/bgp:bgp/bgp:rib
-            /bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast
-            /bgp:rib-out-post:
+
+  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bgp:bgp/bgp:rib/bgp:afi-safis/bgp:afi-safi/bgp:ipv6-unicast/bgp:neighbors/bgp:neighbor/bgp:adj-rib-out-post:
     +--ro statistics
        +--ro validation-state-unverified?   yang:gauge32
        +--ro validation-state-unknown?      yang:gauge32
